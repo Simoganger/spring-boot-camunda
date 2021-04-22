@@ -1,0 +1,34 @@
+# Database configuration
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+  datasource:
+    url: jdbc:h2:mem:camunda_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+
+# Camunda admin account
+camunda:
+  bpm:
+    database:
+      type: h2
+    authorization:
+      enabled: true
+    admin-user:
+      id: admin
+      password: admin
+      firstName: Simon
+      lastName: Ngang
+    filter:
+      create: All tasks
+    job-execution:
+      enabled: true
+      deployment-aware: true
