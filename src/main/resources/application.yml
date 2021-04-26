@@ -1,16 +1,21 @@
 # Database configuration
 spring:
+  datasource:
+    jdbc-url: jdbc:h2:mem:custom_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  camunda-datasource:
+    jdbc-url: jdbc:h2:mem:camunda_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
   main:
     allow-bean-definition-overriding: true
     jpa:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.H2Dialect
-  datasource:
-    url: jdbc:h2:mem:camunda_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
   h2:
     console:
       enabled: true
@@ -32,3 +37,16 @@ camunda:
     job-execution:
       enabled: true
       deployment-aware: true
+    generic-properties:
+      properties:
+        initializeTelemetry: false
+        telemetryReporterActivate: false
+
+# Application configurations
+app:
+  storage:
+    directory: /home/simon/camunda
+  security:
+    jwt:
+      secret: 0A7A690F19001C887DEB108AE40C54717E740385243437A863569C91BF8AC99B
+      expiration: 86400000
