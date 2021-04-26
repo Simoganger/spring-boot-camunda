@@ -65,6 +65,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 }
                 try {
                     engine.getIdentityService().setAuthentication(username, getCurrentUserGroups());
+                    System.out.println("Username=" + username + ", groups=" + getCurrentUserGroups());
                 } finally {
                     clearAuthentication(engine);
                 }

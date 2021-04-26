@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtTokenProvider {
@@ -55,8 +56,15 @@ public class JwtTokenProvider {
 
     public User getCurrentUser(Jws<Claims> claims){
         String username = claims.getBody().get("username").toString();
-        List<String> groups = Arrays.asList(claims.getBody().get("groups").toString().split(","));
-        return new User(username, groups);
+        String groupsArray = claims.getBody().get("groups").toString();
+        return new User(username, extractGroups(groupsArray));
+    }
+
+    public List<String> extractGroups(String groupsArray) {
+        String groupsString = groupsArray.substring(0, groupsArray.length()-1);
+        return Arrays.stream(groupsString.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
 }

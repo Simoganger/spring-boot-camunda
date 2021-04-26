@@ -2,15 +2,13 @@ package com.foo.spring.boot.camunda.controller;
 
 import com.foo.spring.boot.camunda.dto.CustomProcessDto;
 import com.foo.spring.boot.camunda.exception.AppCommonException;
+import com.foo.spring.boot.camunda.exception.AppDBItemNotFoundException;
 import com.foo.spring.boot.camunda.service.CustomProcessService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
@@ -44,21 +42,28 @@ public class CustomController {
 
     /**
      * Deploy a process
-     * @return
+     * @param id
+     * @return The id of the deployment
+     * @throws IOException
+     * @throws AppDBItemNotFoundException
      */
-    @PostMapping("/process/deploy")
+    @PostMapping("/process/deploy/{id}")
     @ApiOperation("Deploy a process")
-    public ResponseEntity<?> deployProcess() {
-        return null;
+    public ResponseEntity<?> deployProcess(@PathVariable String id) throws IOException, AppDBItemNotFoundException {
+        String deploymentId = customProcessService.deployProcess(id);
+        return new ResponseEntity<>("Process deployed successfully with deployment id " + deploymentId, HttpStatus.OK);
     }
 
     /**
      * Start a process
-     * @return
+     * @param id
+     * @return The id of the started instance
+     * @throws AppDBItemNotFoundException
      */
-    @PostMapping("/process/start")
+    @PostMapping("/process/start/{id}")
     @ApiOperation("Start an instance of process")
-    public ResponseEntity<?> startProcess() {
-        return null;
+    public ResponseEntity<?> startProcess(@PathVariable String id) throws AppDBItemNotFoundException {
+        String processInstanceId = customProcessService.startInstance(id);
+        return new ResponseEntity<>("Instance started successfully with id " + processInstanceId, HttpStatus.OK);
     }
 }

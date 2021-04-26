@@ -38,7 +38,7 @@ public class TokenUtil {
 
     public static void main(String[] args) {
         //User simon = new User("simon", Arrays.asList("camunda-admin"));
-        User jan = new User("jan", Arrays.asList("camunda-user"));
+        User jan = new User("jan", Arrays.asList("other-user"));
         System.out.println(generateJwtToken(jan));
     }
 }
