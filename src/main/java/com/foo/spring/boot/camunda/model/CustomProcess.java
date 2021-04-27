@@ -41,7 +41,7 @@ public class CustomProcess extends Model {
 
     @Override
     public String toString() {
-        return "Workflow{" +
+        return "CustomProcess{" +
                 "name='" + name + '\'' +
                 ", processId='" + processId + '\'' +
                 ", bpmnFile=" + bpmnFile +

@@ -94,6 +94,7 @@ public class CustomProcessServiceImpl implements CustomProcessService {
     @Override
     public String startInstance(String id) throws AppDBItemNotFoundException {
         CustomProcess customProcess = findById(id);
+        ProcessInstance instance = runtimeService.startProcessInstanceByKey(customProcess.getProcessId());
         return runtimeService.startProcessInstanceByKey(customProcess.getProcessId()).getProcessInstanceId();
     }
 }

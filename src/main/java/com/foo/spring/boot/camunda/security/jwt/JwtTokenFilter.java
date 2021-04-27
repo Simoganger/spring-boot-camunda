@@ -8,6 +8,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.camunda.bpm.engine.AuthorizationException;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.rest.util.EngineUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -65,15 +66,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 }
                 try {
                     engine.getIdentityService().setAuthentication(username, getCurrentUserGroups());
-                    System.out.println("Username=" + username + ", groups=" + getCurrentUserGroups());
-                } finally {
+                    filterChain.doFilter(request, response);
+                }
+                finally {
                     clearAuthentication(engine);
                 }
             }
         }catch(AppCommonException e){
             logger.debug("An error occured while parsing the jwt token!");
         }
-        filterChain.doFilter(request, response);
+
     }
 
     private String getJwt(HttpServletRequest request) {
