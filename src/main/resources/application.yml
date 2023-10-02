@@ -45,8 +45,8 @@ camunda:
 # Application configurations
 app:
   storage:
-    directory: /home/simon/camunda
+    directory: /etc/local/camunda
   security:
     jwt:
-      secret: 0A7A690F19001C887DEB108AE40C54717E740385243437A863569C91BF8AC99B
+      secret: 0A7A690F19001C887DEB108AE40C547174840385243437A863569C91BF8AC99B
       expiration: 86400000

@@ -30,7 +30,7 @@ public class CustomController {
      * @return
      */
     @PostMapping("/process")
-    @ApiOperation("Upload a process in the repository")
+    @ApiOperation("Upload an active process in the repository")
     public ResponseEntity<?> createProcess(@RequestPart("file") MultipartFile file,
                                        @RequestPart("process") CustomProcessDto customProcessDto) {
         try {
@@ -49,9 +49,9 @@ public class CustomController {
      */
     @PostMapping("/process/deploy/{id}")
     @ApiOperation("Deploy a process")
-    public ResponseEntity<?> deployProcess(@PathVariable String id) throws IOException, AppDBItemNotFoundException {
+    public ResponseEntity<?> deployActiveProcess(@PathVariable String id) throws IOException, AppDBItemNotFoundException {
         String deploymentId = customProcessService.deployProcess(id);
-        return new ResponseEntity<>("Process deployed successfully with deployment id " + deploymentId, HttpStatus.OK);
+        return new ResponseEntity<>("Process deployed successfully with deployment id: " + deploymentId, HttpStatus.OK);
     }
 
     /**
@@ -65,5 +65,10 @@ public class CustomController {
     public ResponseEntity<?> startProcess(@PathVariable String id) throws AppDBItemNotFoundException {
         String processInstanceId = customProcessService.startInstance(id);
         return new ResponseEntity<>("Instance started successfully with id " + processInstanceId, HttpStatus.OK);
+    }
+
+    @PostMapping("/welcome")
+    public String welcome(String text) {
+        return "Welcome" + text;
     }
 }
